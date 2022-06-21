@@ -1,3 +1,4 @@
+let Lives = 0
 let popy_man = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -6,10 +7,10 @@ let popy_man = sprites.create(img`
     . . . . . . . 2 2 2 2 . . . . . 
     . . . . . . . 2 1 1 . . . . . . 
     . . . . . . . . 1 . . . . . . . 
-    . . . . . . . 1 1 1 . . . . . . 
+    . . . . . . . f 1 f . . . . . . 
     . . . . . . . . 1 . . . . . . . 
     . . . . . . . . 1 . . . . . . . 
-    . . . . . . . 1 . 1 . . . . . . 
+    . . . . . . . e . e . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -151,10 +152,16 @@ forever(function () {
 })
 forever(function () {
     if (controller.up.isPressed() && popy_man.tileKindAt(TileDirection.Bottom, assets.tile`myTile7`)) {
-        popy_man.setVelocity(0, -20)
+        popy_man.setVelocity(0, -60)
         pause(100)
     } else {
         pause(100)
         popy_man.setVelocity(0, 25)
+    }
+})
+forever(function () {
+    if (popy_man.tileKindAt(TileDirection.Bottom, assets.tile`myTile6`)) {
+        Lives += 10
+        game.reset()
     }
 })

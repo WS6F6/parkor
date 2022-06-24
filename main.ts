@@ -1,4 +1,9 @@
-function Enemies () {
+function Take_damege_from_Bad_guys () {
+    pause(500)
+    textSprite2.setText(convertToText(Lives))
+    Lives += -1
+}
+function Place_Enemies () {
     enemy1 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -57,18 +62,13 @@ function Enemies () {
         `, SpriteKind.Player)
     tiles.placeOnTile(enemy3, tiles.getTileLocation(78, 13))
 }
-function Take_damege_from_Bad_guys () {
-    pause(500)
-    textSprite2.setText(convertToText(Lives))
-    Lives += -1
-}
-let value: number[] = []
 let enemy3: Sprite = null
 let enemy2: Sprite = null
 let enemy1: Sprite = null
+let mySprite = 0
 let textSprite2: TextSprite = null
 let Lives = 0
-Lives = 10
+Lives = 5
 let popy_man = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -210,14 +210,19 @@ scene.setBackgroundImage(img`
     8888888888888828888888888888888882222888888888888888888828888888888888888888888822288888888888888828888888888888888828888888828888888888888888288888888888288888
     8888888888888828888888888888888882282888888888888888888828888888888888888888888888288888888888888228888888888888888828888888828888888888888888288888888888228888
     `)
-tiles.placeOnTile(popy_man, tiles.getTileLocation(0, 19))
+tiles.placeOnTile(popy_man, tiles.getTileLocation(34, 8))
 scene.cameraFollowSprite(popy_man)
-Enemies()
+Place_Enemies()
 textSprite2 = textsprite.create(convertToText(Lives))
 textSprite2.setText(convertToText(Lives))
-forever(function () {
-    value = [3, 2, 1]
-})
+let _321 = [3, 2, 1]
+let giveitome = textsprite.create("69")
+pause(1000)
+giveitome.setPosition(scene.cameraProperty(CameraProperty.X) - 4, scene.cameraProperty(CameraProperty.Y) - 21)
+for (let current_number of _321) {
+    giveitome.setText(convertToText(current_number))
+    pause(500)
+}
 forever(function () {
     if (popy_man.overlapsWith(enemy1)) {
         enemy1.follow(popy_man, 70)
@@ -239,6 +244,11 @@ forever(function () {
         pause(375)
     } else {
         popy_man.setVelocity(0, 100)
+    }
+})
+forever(function () {
+    if (Lives == 0) {
+        game.reset()
     }
 })
 forever(function () {
@@ -294,16 +304,26 @@ forever(function () {
     }
 })
 forever(function () {
+	
+})
+forever(function () {
     textSprite2.setPosition(scene.cameraProperty(CameraProperty.X) - -70, scene.cameraProperty(CameraProperty.Y) - 55)
 })
 forever(function () {
     if (popy_man.tileKindAt(TileDirection.Bottom, assets.tile`myTile8`)) {
         game.over(true)
+        music.playMelody("C D E F G A B C5 ", 120)
     }
 })
 forever(function () {
-    if (true) {
-    	
+    if (controller.A.isPressed() && enemy1.overlapsWith(popy_man)) {
+        enemy1.destroy()
+    }
+    if (controller.A.isPressed() && enemy2.overlapsWith(popy_man)) {
+        enemy2.destroy()
+    }
+    if (controller.A.isPressed() && enemy3.overlapsWith(popy_man)) {
+        enemy3.destroy()
     }
 })
 forever(function () {
